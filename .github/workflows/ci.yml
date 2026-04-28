@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  lint:
+  build-lint-typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,20 +19,8 @@ jobs:
           node-version: 20.x
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
+      - run: pnpm build
       - run: pnpm lint
-
-  type-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-          cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
       - run: pnpm type-check
 
   test:
@@ -50,19 +38,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
+      - run: pnpm build
       - run: pnpm test -- --coverage
 
-  build:
+  gate:
     runs-on: ubuntu-latest
-    needs: [lint, type-check, test]
+    needs: [build-lint-typecheck, test]
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-          cache: 'pnpm'
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
+      - run: echo "All checks passed"
