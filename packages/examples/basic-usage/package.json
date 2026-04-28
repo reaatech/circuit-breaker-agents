@@ -1,0 +1,27 @@
+{
+  "name": "@circuit-breaker-agents/example-basic-usage",
+  "version": "0.1.0",
+  "author": "Rick Somers <rick@reaatech.com> (https://reaatech.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reaatech/circuit-breaker-agents.git"
+  },
+  "homepage": "https://github.com/reaatech/circuit-breaker-agents#readme",
+  "bugs": {
+    "url": "https://github.com/reaatech/circuit-breaker-agents/issues"
+  },
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prestart": "echo 'Ensure pnpm build has been run in the repo root first'",
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "circuit-breaker-agents": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}
