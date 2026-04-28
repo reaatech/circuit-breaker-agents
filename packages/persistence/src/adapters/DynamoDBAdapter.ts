@@ -106,7 +106,7 @@ export class DynamoDBAdapter implements PersistenceAdapter {
       if (existing.Item) {
         const data = unmarshall(existing.Item) as Record<string, unknown>;
         const leaseExpires = Number(data.lease_expires_at ?? 0);
-        const leaderId = String(data.leader_id ?? '');
+        const leaderId = typeof data.leader_id === 'string' ? data.leader_id : '';
         const fencingToken = Number(data.fencing_token ?? 0);
 
         if (leaseExpires > now && leaderId !== instanceId) {

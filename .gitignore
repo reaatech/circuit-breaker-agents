@@ -22,6 +22,9 @@ pnpm-debug.log*
 .env.local
 .env.*.local
 
+# Turborepo
+.turbo/
+
 # IDE
 .idea/
 .vscode/
