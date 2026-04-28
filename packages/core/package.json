@@ -35,10 +35,10 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "^1.2.2",
+    "@vitest/coverage-v8": "^4.1.5",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3",
-    "vitest": "^1.2.2",
+    "vitest": "^4.1.5",
     "zod": "^3.22.4"
   },
   "dependencies": {
