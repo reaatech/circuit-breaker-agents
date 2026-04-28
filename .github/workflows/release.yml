@@ -1,0 +1,38 @@
+# Release workflow — DISABLED BY DEFAULT
+#
+# This is an internal library. There is no automated deployment or NPM publishing.
+# To create a release manually:
+#   1. Tag the commit: git tag v0.1.0
+#   2. Push the tag: git push origin v0.1.0
+#   3. Create a GitHub release from the tag
+#
+# If automated releases are needed in the future, uncomment and configure below.
+
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      # Manual release only — no deployment
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          # No files uploaded — source release only
