@@ -39,7 +39,7 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      - run: pnpm test -- --coverage
+      - run: pnpm test:coverage
 
   gate:
     runs-on: ubuntu-latest
