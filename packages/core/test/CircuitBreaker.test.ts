@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { CircuitBreaker } from '../src/CircuitBreaker.js';
 import { CircuitOpenError, CircuitTimeoutError } from '../src/CircuitBreakerError.js';
 
@@ -21,8 +21,7 @@ describe('CircuitBreaker', () => {
     it('should throw CircuitOpenError when OPEN', async () => {
       const breaker = new CircuitBreaker({ name: 'test' });
       breaker.forceState('test', 'OPEN');
-      await expect(breaker.execute(() => Promise.resolve('ok')))
-        .rejects.toThrow(CircuitOpenError);
+      await expect(breaker.execute(() => Promise.resolve('ok'))).rejects.toThrow(CircuitOpenError);
     });
 
     it('should include timeUntilRetry in CircuitOpenError', async () => {
@@ -65,9 +64,9 @@ describe('CircuitBreaker', () => {
       const breaker = new CircuitBreaker({ name: 'test' });
       const onFailure = vi.fn().mockReturnValue({ confidence: 0.3 });
       const error = new Error('fail');
-      await expect(
-        breaker.execute(() => Promise.reject(error), { onFailure })
-      ).rejects.toThrow('fail');
+      await expect(breaker.execute(() => Promise.reject(error), { onFailure })).rejects.toThrow(
+        'fail',
+      );
       expect(onFailure).toHaveBeenCalledWith(error);
     });
   });
@@ -244,7 +243,9 @@ describe('CircuitBreaker', () => {
   describe('event handling', () => {
     it('should not throw when event handler errors', async () => {
       const breaker = new CircuitBreaker({ name: 'test' });
-      breaker.on('success', () => { throw new Error('handler error'); });
+      breaker.on('success', () => {
+        throw new Error('handler error');
+      });
       await breaker.execute(() => Promise.resolve('ok'));
       expect(true).toBe(true);
     });
@@ -254,7 +255,9 @@ describe('CircuitBreaker', () => {
       const handler = vi.fn();
       breaker.on('callbackError', handler);
       await breaker.execute(() => Promise.resolve('ok'), {
-        onSuccess: () => { throw new Error('callback error'); },
+        onSuccess: () => {
+          throw new Error('callback error');
+        },
       });
       expect(handler).toHaveBeenCalledTimes(1);
       expect(handler.mock.calls[0][0].data.source).toBe('onSuccess');
@@ -266,8 +269,10 @@ describe('CircuitBreaker', () => {
       breaker.on('callbackError', handler);
       await expect(
         breaker.execute(() => Promise.reject(new Error('fail')), {
-          onFailure: () => { throw new Error('callback error'); },
-        })
+          onFailure: () => {
+            throw new Error('callback error');
+          },
+        }),
       ).rejects.toThrow('fail');
       expect(handler).toHaveBeenCalledTimes(1);
       expect(handler.mock.calls[0][0].data.source).toBe('onFailure');
@@ -285,10 +290,9 @@ describe('CircuitBreaker', () => {
     it('should apply request timeout with forceRoute', async () => {
       vi.useRealTimers();
       const breaker = new CircuitBreaker({ name: 'test', requestTimeoutMs: 50 });
-      const promise = breaker.execute(
-        () => new Promise((resolve) => setTimeout(resolve, 2000)),
-        { forceRoute: true }
-      );
+      const promise = breaker.execute(() => new Promise((resolve) => setTimeout(resolve, 2000)), {
+        forceRoute: true,
+      });
       await expect(promise).rejects.toThrow(CircuitTimeoutError);
       vi.useFakeTimers();
     }, 10000);

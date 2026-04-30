@@ -1,9 +1,12 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ErrorThresholdStrategy } from '../src/strategies/ErrorThresholdStrategy.js';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { DefaultMetricsCollector, NoOpMetricsCollector } from '../src/metrics/MetricsCollector.js';
 import { ConfidenceThresholdStrategy } from '../src/strategies/ConfidenceThresholdStrategy.js';
 import { CostThresholdStrategy } from '../src/strategies/CostThresholdStrategy.js';
-import { GradualRecoveryStrategy, SingleRecoveryStrategy } from '../src/strategies/GradualRecoveryStrategy.js';
-import { DefaultMetricsCollector, NoOpMetricsCollector } from '../src/metrics/MetricsCollector.js';
+import { ErrorThresholdStrategy } from '../src/strategies/ErrorThresholdStrategy.js';
+import {
+  GradualRecoveryStrategy,
+  SingleRecoveryStrategy,
+} from '../src/strategies/GradualRecoveryStrategy.js';
 import type { CircuitBreakerState } from '../src/types/circuit.js';
 
 describe('ConfidenceThresholdStrategy', () => {

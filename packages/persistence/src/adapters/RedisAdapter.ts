@@ -1,6 +1,9 @@
+import {
+  type CircuitBreakerState,
+  CircuitBreakerStateSchema,
+} from '@reaatech/circuit-breaker-core';
 import type { Redis } from 'ioredis';
-import { CircuitBreakerStateSchema, type CircuitBreakerState } from 'circuit-breaker-core';
-import type { PersistenceAdapter, HealthStatus, LeadershipResult } from '../types/adapter.js';
+import type { HealthStatus, LeadershipResult, PersistenceAdapter } from '../types/adapter.js';
 import { parseState } from '../utils/parseState.js';
 
 const SAVE_SCRIPT = `
@@ -20,7 +23,7 @@ export class RedisAdapter implements PersistenceAdapter {
   constructor(
     private readonly redis: Redis,
     private readonly keyPrefix: string = 'cb',
-    private readonly ttlSeconds: number = 86400
+    private readonly ttlSeconds: number = 86400,
   ) {}
 
   async connect(): Promise<void> {
@@ -46,15 +49,24 @@ export class RedisAdapter implements PersistenceAdapter {
 
     const args = [
       validated.version.toString(),
-      'circuit_id', validated.circuit_id,
-      'state', validated.state,
-      'failure_count', validated.failure_count.toString(),
-      'success_count', validated.success_count.toString(),
-      'last_state_change', validated.last_state_change.toString(),
-      'half_open_expected_calls', validated.half_open_expected_calls.toString(),
-      'half_open_completed_calls', validated.half_open_completed_calls.toString(),
-      'backoff_multiplier', validated.backoff_multiplier.toString(),
-      'version', validated.version.toString(),
+      'circuit_id',
+      validated.circuit_id,
+      'state',
+      validated.state,
+      'failure_count',
+      validated.failure_count.toString(),
+      'success_count',
+      validated.success_count.toString(),
+      'last_state_change',
+      validated.last_state_change.toString(),
+      'half_open_expected_calls',
+      validated.half_open_expected_calls.toString(),
+      'half_open_completed_calls',
+      validated.half_open_completed_calls.toString(),
+      'backoff_multiplier',
+      validated.backoff_multiplier.toString(),
+      'version',
+      validated.version.toString(),
     ];
 
     if (validated.last_failure_time !== undefined) {
@@ -144,10 +156,17 @@ export class RedisAdapter implements PersistenceAdapter {
       return 0
     `;
 
-    const result = await this.redis.eval(lua, 1, key, now.toString(), instanceId, leaseExpiry.toString());
+    const result = await this.redis.eval(
+      lua,
+      1,
+      key,
+      now.toString(),
+      instanceId,
+      leaseExpiry.toString(),
+    );
     if (result === 0) {
       const data = await this.redis.hgetall(key);
-      return { isLeader: false, fencingToken: parseInt(data.fencing_token ?? '0', 10) };
+      return { isLeader: false, fencingToken: Number.parseInt(data.fencing_token ?? '0', 10) };
     }
     return { isLeader: true, fencingToken: result as number };
   }
@@ -196,14 +215,16 @@ export class RedisAdapter implements PersistenceAdapter {
     return {
       circuit_id: data.circuit_id,
       state: data.state,
-      failure_count: parseInt(data.failure_count ?? '0', 10),
-      success_count: parseInt(data.success_count ?? '0', 10),
-      last_failure_time: data.last_failure_time ? parseInt(data.last_failure_time, 10) : undefined,
-      last_state_change: parseInt(data.last_state_change ?? '0', 10),
-      half_open_expected_calls: parseInt(data.half_open_expected_calls ?? '0', 10),
-      half_open_completed_calls: parseInt(data.half_open_completed_calls ?? '0', 10),
-      backoff_multiplier: parseInt(data.backoff_multiplier ?? '1', 10),
-      version: parseInt(data.version ?? '1', 10),
+      failure_count: Number.parseInt(data.failure_count ?? '0', 10),
+      success_count: Number.parseInt(data.success_count ?? '0', 10),
+      last_failure_time: data.last_failure_time
+        ? Number.parseInt(data.last_failure_time, 10)
+        : undefined,
+      last_state_change: Number.parseInt(data.last_state_change ?? '0', 10),
+      half_open_expected_calls: Number.parseInt(data.half_open_expected_calls ?? '0', 10),
+      half_open_completed_calls: Number.parseInt(data.half_open_completed_calls ?? '0', 10),
+      backoff_multiplier: Number.parseInt(data.backoff_multiplier ?? '1', 10),
+      version: Number.parseInt(data.version ?? '1', 10),
     };
   }
 }

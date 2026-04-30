@@ -1,5 +1,5 @@
 import { Firestore } from '@google-cloud/firestore';
-import { CircuitBreaker, FirestoreAdapter } from 'circuit-breaker-agents';
+import { CircuitBreaker, FirestoreAdapter } from '@reaatech/circuit-breaker-agents';
 
 /**
  * Firestore persistence example.

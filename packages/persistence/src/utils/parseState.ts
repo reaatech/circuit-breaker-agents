@@ -1,4 +1,7 @@
-import { CircuitBreakerStateSchema, type CircuitBreakerState } from 'circuit-breaker-core';
+import {
+  type CircuitBreakerState,
+  CircuitBreakerStateSchema,
+} from '@reaatech/circuit-breaker-core';
 
 export function parseState(data: Record<string, unknown>): CircuitBreakerState | null {
   try {

@@ -1,4 +1,4 @@
-import { CircuitBreaker, CircuitOpenError } from 'circuit-breaker-agents';
+import { CircuitBreaker, CircuitOpenError } from '@reaatech/circuit-breaker-agents';
 
 /**
  * Basic usage example — no persistence, no external dependencies.
@@ -25,7 +25,7 @@ const breaker = new CircuitBreaker({
 
 breaker.on('stateChange', (event) => {
   console.log(
-    `[${event.circuit_id}] State changed: ${event.data.from} -> ${event.data.to} (${event.data.reason})`
+    `[${event.circuit_id}] State changed: ${event.data.from} -> ${event.data.to} (${event.data.reason})`,
   );
 });
 
@@ -37,7 +37,7 @@ type OperationResult = { text: string; confidence?: number; costUsd?: number; to
 
 async function simulateOperation(
   shouldFail: boolean,
-  metadata?: { confidence?: number; costUsd?: number; tokens?: number }
+  metadata?: { confidence?: number; costUsd?: number; tokens?: number },
 ): Promise<OperationResult> {
   if (shouldFail) {
     throw new Error('Simulated failure');
@@ -62,17 +62,17 @@ async function main() {
   console.log('--- 1. Normal execution ---');
   const ok = await breaker.execute(
     () => simulateOperation(false, { confidence: 0.9, costUsd: 0.01, tokens: 150 }),
-    { onSuccess: extractMetadata, onFailure: extractErrorMetadata }
+    { onSuccess: extractMetadata, onFailure: extractErrorMetadata },
   );
   console.log('Result:', ok);
 
   console.log('\n--- 2. Trigger error threshold ---');
   for (let i = 0; i < 3; i++) {
     try {
-      await breaker.execute(
-        () => simulateOperation(true),
-        { onSuccess: extractMetadata, onFailure: extractErrorMetadata }
-      );
+      await breaker.execute(() => simulateOperation(true), {
+        onSuccess: extractMetadata,
+        onFailure: extractErrorMetadata,
+      });
     } catch (err) {
       console.log('Caught:', (err as Error).message);
     }
@@ -91,7 +91,7 @@ async function main() {
 
   const recovery = await breaker.execute(
     () => simulateOperation(false, { confidence: 0.95, costUsd: 0.005, tokens: 100 }),
-    { onSuccess: extractMetadata, onFailure: extractErrorMetadata }
+    { onSuccess: extractMetadata, onFailure: extractErrorMetadata },
   );
   console.log('Recovery result:', recovery);
   console.log('State after success:', breaker.getState());

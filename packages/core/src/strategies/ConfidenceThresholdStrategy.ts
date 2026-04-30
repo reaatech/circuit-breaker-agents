@@ -1,5 +1,5 @@
-import type { TripStrategy } from './TripStrategy.js';
 import type { CircuitBreakerStats, ResultMetadata } from '../types/circuit.js';
+import type { TripStrategy } from './TripStrategy.js';
 
 export class ConfidenceThresholdStrategy implements TripStrategy {
   readonly name = 'confidenceThreshold';
@@ -7,7 +7,7 @@ export class ConfidenceThresholdStrategy implements TripStrategy {
 
   constructor(
     private readonly minConfidence: number,
-    private readonly windowMs: number = 60000
+    private readonly windowMs: number = 60000,
   ) {}
 
   shouldTrip(): boolean {
