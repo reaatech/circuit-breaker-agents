@@ -4,13 +4,11 @@ export class GradualRecoveryStrategy implements RecoveryStrategy {
   readonly name = 'gradual';
   private phases = new Map<string, number>();
 
-  constructor(
-    private readonly maxCalls: number = 16
-  ) {}
+  constructor(private readonly maxCalls: number = 16) {}
 
   getExpectedCalls(circuitId: string): number {
     const phase = this.phases.get(circuitId) ?? 0;
-    return Math.min(Math.pow(2, phase), this.maxCalls);
+    return Math.min(2 ** phase, this.maxCalls);
   }
 
   onSuccess(circuitId: string): void {

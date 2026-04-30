@@ -7,7 +7,7 @@ export abstract class LeaderElection {
 
   constructor(
     protected readonly instanceId: string,
-    protected readonly leaseDurationMs: number
+    protected readonly leaseDurationMs: number,
   ) {}
 
   abstract tryAcquireLeadership(): Promise<LeadershipResult>;

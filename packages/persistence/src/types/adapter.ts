@@ -1,4 +1,4 @@
-import type { CircuitBreakerState } from 'circuit-breaker-core';
+import type { CircuitBreakerState } from '@reaatech/circuit-breaker-core';
 
 export interface PersistenceAdapter {
   connect(): Promise<void>;

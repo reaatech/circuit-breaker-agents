@@ -1,20 +1,20 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
   CircuitBreaker,
+  CircuitBreakerStateSchema,
   CircuitOpenError,
   CircuitTimeoutError,
-  StateMachine,
-  ErrorThresholdStrategy,
   ConfidenceThresholdStrategy,
   CostThresholdStrategy,
-  GradualRecoveryStrategy,
-  SingleRecoveryStrategy,
   DefaultMetricsCollector,
-  NoOpMetricsCollector,
-  CircuitBreakerStateSchema,
+  ErrorThresholdStrategy,
+  GradualRecoveryStrategy,
   InMemoryAdapter,
   LeaderElection,
   MemoryLeaderElection,
+  NoOpMetricsCollector,
+  SingleRecoveryStrategy,
+  StateMachine,
 } from '../src/index.js';
 
 describe('circuit-breaker-agents meta-package', () => {

@@ -25,8 +25,16 @@ export class NoOpMetricsCollector implements MetricsCollector {
 }
 
 export class DefaultMetricsCollector implements MetricsCollector {
-  private requests = new Map<string, { success: number; failure: number; open: number; timeout: number }>();
-  private stateChanges: Array<{ circuitId: string; from: CircuitState; to: CircuitState; time: number }> = [];
+  private requests = new Map<
+    string,
+    { success: number; failure: number; open: number; timeout: number }
+  >();
+  private stateChanges: Array<{
+    circuitId: string;
+    from: CircuitState;
+    to: CircuitState;
+    time: number;
+  }> = [];
   private durations: Array<{ circuitId: string; durationMs: number }> = [];
   private confidenceReadings: Array<{ circuitId: string; confidence: number }> = [];
   private costReadings: Array<{ circuitId: string; costUsd: number; tokens: number }> = [];
@@ -87,11 +95,21 @@ export class DefaultMetricsCollector implements MetricsCollector {
     }
   }
 
-  getRequestCounts(circuitId: string): { success: number; failure: number; open: number; timeout: number } {
+  getRequestCounts(circuitId: string): {
+    success: number;
+    failure: number;
+    open: number;
+    timeout: number;
+  } {
     return this.requests.get(circuitId) ?? { ...EMPTY_COUNTS };
   }
 
-  getStateChanges(): ReadonlyArray<{ circuitId: string; from: CircuitState; to: CircuitState; time: number }> {
+  getStateChanges(): ReadonlyArray<{
+    circuitId: string;
+    from: CircuitState;
+    to: CircuitState;
+    time: number;
+  }> {
     return this.stateChanges;
   }
 
@@ -100,12 +118,16 @@ export class DefaultMetricsCollector implements MetricsCollector {
     return this.durations;
   }
 
-  getConfidenceReadings(circuitId?: string): ReadonlyArray<{ circuitId: string; confidence: number }> {
+  getConfidenceReadings(
+    circuitId?: string,
+  ): ReadonlyArray<{ circuitId: string; confidence: number }> {
     if (circuitId) return this.confidenceReadings.filter((c) => c.circuitId === circuitId);
     return this.confidenceReadings;
   }
 
-  getCostReadings(circuitId?: string): ReadonlyArray<{ circuitId: string; costUsd: number; tokens: number }> {
+  getCostReadings(
+    circuitId?: string,
+  ): ReadonlyArray<{ circuitId: string; costUsd: number; tokens: number }> {
     if (circuitId) return this.costReadings.filter((c) => c.circuitId === circuitId);
     return this.costReadings;
   }

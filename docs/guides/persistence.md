@@ -14,7 +14,7 @@ If persistence fails, the circuit continues operating in-memory and emits a `per
 ## Using an Adapter
 
 ```typescript
-import { CircuitBreaker, InMemoryAdapter } from 'circuit-breaker-agents';
+import { CircuitBreaker, InMemoryAdapter } from '@reaatech/circuit-breaker-agents';
 
 const adapter = new InMemoryAdapter();
 const breaker = new CircuitBreaker({
@@ -50,7 +50,7 @@ The `CircuitBreaker` increments `version` on every state transition.
 For shared backends (Redis, Firestore, DynamoDB), only the leader instance should write state to prevent quota exhaustion.
 
 ```typescript
-import { LeaderElection, MemoryLeaderElection } from 'circuit-breaker-agents';
+import { LeaderElection, MemoryLeaderElection } from '@reaatech/circuit-breaker-agents';
 
 const election = new MemoryLeaderElection('instance-1', 10000);
 const result = await election.tryAcquireLeadership();

@@ -1,5 +1,5 @@
 {
-  "name": "@circuit-breaker-agents/example-with-dynamodb",
+  "name": "@reaatech/circuit-breaker-example-dynamodb",
   "version": "0.1.0",
   "author": "Rick Somers <rick@reaatech.com> (https://reaatech.com)",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "start": "tsx src/index.ts"
   },
   "dependencies": {
-    "circuit-breaker-agents": "workspace:*",
+    "@reaatech/circuit-breaker-agents": "workspace:*",
     "@aws-sdk/client-dynamodb": "^3.500.0",
     "@aws-sdk/util-dynamodb": "^3.500.0"
   },

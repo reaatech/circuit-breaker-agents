@@ -1,5 +1,5 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { CircuitBreaker, DynamoDBAdapter } from 'circuit-breaker-agents';
+import { CircuitBreaker, DynamoDBAdapter } from '@reaatech/circuit-breaker-agents';
 
 /**
  * DynamoDB persistence example.

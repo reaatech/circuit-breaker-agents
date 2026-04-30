@@ -5,7 +5,7 @@
 All options are passed to the `CircuitBreaker` constructor.
 
 ```typescript
-import { CircuitBreaker } from 'circuit-breaker-agents';
+import { CircuitBreaker } from '@reaatech/circuit-breaker-agents';
 
 const breaker = new CircuitBreaker({
   name: 'my-agent',              // required — default circuit ID

@@ -1,5 +1,8 @@
-import { CircuitBreakerStateSchema, type CircuitBreakerState } from 'circuit-breaker-core';
-import type { PersistenceAdapter, HealthStatus } from '../types/adapter.js';
+import {
+  type CircuitBreakerState,
+  CircuitBreakerStateSchema,
+} from '@reaatech/circuit-breaker-core';
+import type { HealthStatus, PersistenceAdapter } from '../types/adapter.js';
 
 export class InMemoryAdapter implements PersistenceAdapter {
   private states = new Map<string, CircuitBreakerState>();

@@ -1,6 +1,9 @@
 import type { Firestore } from '@google-cloud/firestore';
-import { CircuitBreakerStateSchema, type CircuitBreakerState } from 'circuit-breaker-core';
-import type { PersistenceAdapter, HealthStatus, LeadershipResult } from '../types/adapter.js';
+import {
+  type CircuitBreakerState,
+  CircuitBreakerStateSchema,
+} from '@reaatech/circuit-breaker-core';
+import type { HealthStatus, LeadershipResult, PersistenceAdapter } from '../types/adapter.js';
 import { parseState } from '../utils/parseState.js';
 
 interface FirestoreLeaderState {
@@ -17,7 +20,7 @@ export class FirestoreAdapter implements PersistenceAdapter {
     private readonly firestore: Firestore,
     private readonly collectionName: string = 'circuit_breakers',
     private readonly leaderCollectionName: string = 'circuit_breaker_leaders',
-    private readonly leaderDocId: string = 'circuit_breaker_sync'
+    private readonly leaderDocId: string = 'circuit_breaker_sync',
   ) {}
 
   async connect(): Promise<void> {
@@ -162,4 +165,3 @@ export class FirestoreAdapter implements PersistenceAdapter {
     }
   }
 }
-

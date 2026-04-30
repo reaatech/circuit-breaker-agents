@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import type { CircuitBreakerState } from '@reaatech/circuit-breaker-core';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { InMemoryAdapter } from '../src/adapters/InMemoryAdapter.js';
-import type { CircuitBreakerState } from 'circuit-breaker-core';
 
 function makeState(overrides: Partial<CircuitBreakerState> = {}): CircuitBreakerState {
   return {
@@ -77,10 +77,7 @@ describe('InMemoryAdapter', () => {
   });
 
   it('should save batch', async () => {
-    const states = [
-      makeState({ circuit_id: 'a' }),
-      makeState({ circuit_id: 'b' }),
-    ];
+    const states = [makeState({ circuit_id: 'a' }), makeState({ circuit_id: 'b' })];
     await adapter.saveBatch(states);
     const all = await adapter.loadAll();
     expect(all).toHaveLength(2);

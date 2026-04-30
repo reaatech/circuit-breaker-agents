@@ -1,5 +1,5 @@
+import { CircuitBreaker, RedisAdapter } from '@reaatech/circuit-breaker-agents';
 import { Redis } from 'ioredis';
-import { CircuitBreaker, RedisAdapter } from 'circuit-breaker-agents';
 
 /**
  * Redis persistence example.

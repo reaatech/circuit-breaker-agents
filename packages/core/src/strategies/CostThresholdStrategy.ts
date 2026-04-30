@@ -1,5 +1,5 @@
-import type { TripStrategy } from './TripStrategy.js';
 import type { CircuitBreakerStats, ResultMetadata } from '../types/circuit.js';
+import type { TripStrategy } from './TripStrategy.js';
 
 export class CostThresholdStrategy implements TripStrategy {
   readonly name = 'costThreshold';
@@ -8,7 +8,7 @@ export class CostThresholdStrategy implements TripStrategy {
   constructor(
     private readonly maxCostPerMinute: number,
     private readonly maxTokensPerCall: number = Number.POSITIVE_INFINITY,
-    private readonly windowMs: number = 60000
+    private readonly windowMs: number = 60000,
   ) {}
 
   shouldTrip(): boolean {

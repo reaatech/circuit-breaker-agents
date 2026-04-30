@@ -45,7 +45,7 @@ Matrix: Node.js 18.x, 20.x
 
 ```json
 {
-  "name": "circuit-breaker-agents",
+  "name": "@reaatech/circuit-breaker-agents",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@8.14.0",
@@ -63,7 +63,7 @@ Matrix: Node.js 18.x, 20.x
 
 ```json
 {
-  "name": "circuit-breaker-core",
+  "name": "@reaatech/circuit-breaker-core",
   "version": "0.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -94,7 +94,7 @@ Matrix: Node.js 18.x, 20.x
 
 ```json
 {
-  "name": "circuit-breaker-persistence",
+  "name": "@reaatech/circuit-breaker-persistence",
   "version": "0.0.0",
   "peerDependencies": {
     "@google-cloud/firestore": "^7.0.0",

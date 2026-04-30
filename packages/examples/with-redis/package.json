@@ -1,5 +1,5 @@
 {
-  "name": "@circuit-breaker-agents/example-with-redis",
+  "name": "@reaatech/circuit-breaker-example-redis",
   "version": "0.1.0",
   "author": "Rick Somers <rick@reaatech.com> (https://reaatech.com)",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "start": "tsx src/index.ts"
   },
   "dependencies": {
-    "circuit-breaker-agents": "workspace:*",
+    "@reaatech/circuit-breaker-agents": "workspace:*",
     "ioredis": "^5.3.2"
   },
   "devDependencies": {

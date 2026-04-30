@@ -1,17 +1,24 @@
+import { CircuitOpenError, CircuitTimeoutError } from './CircuitBreakerError.js';
 import { StateMachine } from './StateMachine.js';
-import type { RecoveryStrategy } from './strategies/TripStrategy.js';
-import type { TripStrategy } from './strategies/TripStrategy.js';
-import { GradualRecoveryStrategy, SingleRecoveryStrategy } from './strategies/GradualRecoveryStrategy.js';
+import type { MetricsCollector } from './metrics/MetricsCollector.js';
+import { DefaultMetricsCollector, NoOpMetricsCollector } from './metrics/MetricsCollector.js';
 import { ConfidenceThresholdStrategy } from './strategies/ConfidenceThresholdStrategy.js';
 import { CostThresholdStrategy } from './strategies/CostThresholdStrategy.js';
 import { ErrorThresholdStrategy } from './strategies/ErrorThresholdStrategy.js';
-import { CircuitOpenError, CircuitTimeoutError } from './CircuitBreakerError.js';
-import type { CircuitBreakerOptions, ExecutionContext, CorePersistenceAdapter } from './types/config.js';
-import type { CircuitState, CircuitBreakerStats, ResultMetadata } from './types/circuit.js';
+import {
+  GradualRecoveryStrategy,
+  SingleRecoveryStrategy,
+} from './strategies/GradualRecoveryStrategy.js';
+import type { RecoveryStrategy } from './strategies/TripStrategy.js';
+import type { TripStrategy } from './strategies/TripStrategy.js';
+import type { CircuitBreakerStats, CircuitState, ResultMetadata } from './types/circuit.js';
+import type {
+  CircuitBreakerOptions,
+  CorePersistenceAdapter,
+  ExecutionContext,
+} from './types/config.js';
 import type { CircuitEvent, CircuitEventType } from './types/events.js';
 import type { EventHandler } from './types/events.js';
-import type { MetricsCollector } from './metrics/MetricsCollector.js';
-import { DefaultMetricsCollector, NoOpMetricsCollector } from './metrics/MetricsCollector.js';
 
 export class CircuitBreaker {
   private readonly name: string;
@@ -23,7 +30,18 @@ export class CircuitBreaker {
   private readonly persistence?: CorePersistenceAdapter;
   private readonly loadedCircuits = new Set<string>();
   private readonly pendingLoads = new Map<string, Promise<void>>();
-  private readonly options: Required<Pick<CircuitBreakerOptions, 'failureThreshold' | 'failureWindowMs' | 'recoveryTimeoutMs' | 'halfOpenTimeoutMs' | 'maxBackoffMultiplier' | 'requestTimeoutMs' | 'metricsEnabled'>>;
+  private readonly options: Required<
+    Pick<
+      CircuitBreakerOptions,
+      | 'failureThreshold'
+      | 'failureWindowMs'
+      | 'recoveryTimeoutMs'
+      | 'halfOpenTimeoutMs'
+      | 'maxBackoffMultiplier'
+      | 'requestTimeoutMs'
+      | 'metricsEnabled'
+    >
+  >;
 
   constructor(options: CircuitBreakerOptions) {
     this.name = options.name;
@@ -41,28 +59,33 @@ export class CircuitBreaker {
 
     this.persistence = options.persistence;
 
-    this.metricsCollector = options.metricsCollector
-      ?? (this.options.metricsEnabled ? new DefaultMetricsCollector() : new NoOpMetricsCollector());
+    this.metricsCollector =
+      options.metricsCollector ??
+      (this.options.metricsEnabled ? new DefaultMetricsCollector() : new NoOpMetricsCollector());
 
     this.tripStrategies = [];
-    this.tripStrategies.push(new ErrorThresholdStrategy(
-      this.options.failureThreshold,
-      this.options.failureWindowMs
-    ));
+    this.tripStrategies.push(
+      new ErrorThresholdStrategy(this.options.failureThreshold, this.options.failureWindowMs),
+    );
     if (options.minConfidence !== undefined) {
-      this.tripStrategies.push(new ConfidenceThresholdStrategy(options.minConfidence, options.confidenceWindowMs));
+      this.tripStrategies.push(
+        new ConfidenceThresholdStrategy(options.minConfidence, options.confidenceWindowMs),
+      );
     }
     if (options.maxCostPerMinute !== undefined || options.maxTokensPerCall !== undefined) {
-      this.tripStrategies.push(new CostThresholdStrategy(
-        options.maxCostPerMinute ?? Number.POSITIVE_INFINITY,
-        options.maxTokensPerCall ?? Number.POSITIVE_INFINITY,
-        options.costWindowMs
-      ));
+      this.tripStrategies.push(
+        new CostThresholdStrategy(
+          options.maxCostPerMinute ?? Number.POSITIVE_INFINITY,
+          options.maxTokensPerCall ?? Number.POSITIVE_INFINITY,
+          options.costWindowMs,
+        ),
+      );
     }
 
-    this.recoveryStrategy = options.recoveryStrategy === 'single'
-      ? new SingleRecoveryStrategy()
-      : new GradualRecoveryStrategy(options.recoveryMaxCalls ?? 16);
+    this.recoveryStrategy =
+      options.recoveryStrategy === 'single'
+        ? new SingleRecoveryStrategy()
+        : new GradualRecoveryStrategy(options.recoveryMaxCalls ?? 16);
   }
 
   async execute<T>(operation: () => Promise<T>, context?: ExecutionContext): Promise<T> {
@@ -96,7 +119,7 @@ export class CircuitBreaker {
       if (stats.half_open_expected_calls === 0) {
         this.stateMachine.setHalfOpenExpectedCalls(
           circuitId,
-          this.recoveryStrategy.getExpectedCalls(circuitId)
+          this.recoveryStrategy.getExpectedCalls(circuitId),
         );
       }
       if (!this.stateMachine.canExecute(circuitId)) {
@@ -171,7 +194,11 @@ export class CircuitBreaker {
       }
 
       this.stateMachine.recordFailure(circuitId);
-      this.emit('failure', circuitId, { duration, error: error instanceof Error ? error.message : String(error), metadata });
+      this.emit('failure', circuitId, {
+        duration,
+        error: error instanceof Error ? error.message : String(error),
+        metadata,
+      });
       void this.maybeSaveState(circuitId);
       this.metricsCollector.recordRequest(circuitId, 'failure');
       this.metricsCollector.recordDuration(circuitId, duration);
@@ -201,7 +228,11 @@ export class CircuitBreaker {
       if (strategy.shouldTrip()) {
         const previousState = this.stateMachine.getState(circuitId);
         this.stateMachine.forceState(circuitId, 'OPEN');
-        this.emit('stateChange', circuitId, { from: previousState, to: 'OPEN', reason: strategy.name });
+        this.emit('stateChange', circuitId, {
+          from: previousState,
+          to: 'OPEN',
+          reason: strategy.name,
+        });
         this.metricsCollector.recordStateChange(circuitId, previousState, 'OPEN');
         break;
       }
@@ -238,7 +269,7 @@ export class CircuitBreaker {
     if (!this.eventHandlers.has(event)) {
       this.eventHandlers.set(event, new Set());
     }
-    this.eventHandlers.get(event)!.add(handler);
+    this.eventHandlers.get(event)?.add(handler);
   }
 
   off(event: CircuitEventType, handler: EventHandler): void {
@@ -252,7 +283,11 @@ export class CircuitBreaker {
       if (strategy.shouldTrip()) {
         const previousState = this.stateMachine.getState(circuitId);
         this.stateMachine.forceState(circuitId, 'OPEN');
-        this.emit('stateChange', circuitId, { from: previousState, to: 'OPEN', reason: strategy.name });
+        this.emit('stateChange', circuitId, {
+          from: previousState,
+          to: 'OPEN',
+          reason: strategy.name,
+        });
         this.metricsCollector.recordStateChange(circuitId, previousState, 'OPEN');
         break;
       }
@@ -279,12 +314,14 @@ export class CircuitBreaker {
 
   private async loadPersistedState(circuitId: string): Promise<void> {
     try {
-      const persisted = await this.persistence!.loadState(circuitId);
+      const persisted = await this.persistence?.loadState(circuitId);
       if (persisted) {
         this.stateMachine.loadPersistedState(circuitId, persisted);
       }
     } catch (error) {
-      this.emit('persistenceError', circuitId, { error: error instanceof Error ? error.message : String(error) });
+      this.emit('persistenceError', circuitId, {
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
     this.loadedCircuits.add(circuitId);
   }
@@ -314,7 +351,11 @@ export class CircuitBreaker {
             data: { source: `handler:${type}`, error: String(err) },
           };
           for (const eh of errorHandlers) {
-            try { eh(errorEvent); } catch { /* final fallback */ }
+            try {
+              eh(errorEvent);
+            } catch {
+              /* final fallback */
+            }
           }
         }
       }
@@ -339,7 +380,7 @@ export class CircuitBreaker {
         (error) => {
           clearTimeout(timer);
           reject(error instanceof Error ? error : new Error(String(error)));
-        }
+        },
       );
     });
   }
@@ -361,7 +402,9 @@ export class CircuitBreaker {
         version: stats.version,
       });
     } catch (error) {
-      this.emit('persistenceError', circuitId, { error: error instanceof Error ? error.message : String(error) });
+      this.emit('persistenceError', circuitId, {
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
   }
 }

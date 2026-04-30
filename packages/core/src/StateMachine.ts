@@ -1,4 +1,4 @@
-import type { CircuitState, CircuitBreakerState, CircuitBreakerStats } from './types/circuit.js';
+import type { CircuitBreakerState, CircuitBreakerStats, CircuitState } from './types/circuit.js';
 
 export interface InternalCircuitState extends CircuitBreakerState {
   total_calls: number;
@@ -93,7 +93,10 @@ export class StateMachine {
 
     if (state.state === 'HALF_OPEN') {
       if (elapsed >= this.options.halfOpenTimeoutMs) return false;
-      return (state.half_open_completed_calls + state.half_open_in_flight_calls) < state.half_open_expected_calls;
+      return (
+        state.half_open_completed_calls + state.half_open_in_flight_calls <
+        state.half_open_expected_calls
+      );
     }
 
     return true;
@@ -227,9 +230,10 @@ export class StateMachine {
   }
 
   private transitionToOpen(_circuitId: string, state: InternalCircuitState): void {
-    const newMultiplier = state.state === 'HALF_OPEN'
-      ? Math.min(state.backoff_multiplier * 2, this.options.maxBackoffMultiplier)
-      : state.backoff_multiplier;
+    const newMultiplier =
+      state.state === 'HALF_OPEN'
+        ? Math.min(state.backoff_multiplier * 2, this.options.maxBackoffMultiplier)
+        : state.backoff_multiplier;
     state.state = 'OPEN';
     state.last_state_change = Date.now();
     state.success_count = 0;
