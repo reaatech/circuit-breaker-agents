@@ -9,9 +9,9 @@ We needed a clean separation between core circuit breaker logic (which must be z
 ## Decision
 Split the library into three packages:
 
-1. **`circuit-breaker-core`** — Zero-dependency core logic. Owns `CircuitBreaker`, `StateMachine`, strategies, types, and metrics interfaces.
-2. **`circuit-breaker-persistence`** — Optional persistence adapters. Peer-dependencies on `@google-cloud/firestore`, `@aws-sdk/client-dynamodb`, `ioredis`. Depends on `circuit-breaker-core`.
-3. **`circuit-breaker-agents`** — Meta-package that re-exports core + persistence for convenience.
+1. **`@reaatech/circuit-breaker-core`** — Zero-dependency core logic. Owns `CircuitBreaker`, `StateMachine`, strategies, types, and metrics interfaces.
+2. **`@reaatech/circuit-breaker-persistence`** — Optional persistence adapters. Peer-dependencies on `@google-cloud/firestore`, `@aws-sdk/client-dynamodb`, `ioredis`. Depends on `@reaatech/circuit-breaker-core`.
+3. **`@reaatech/circuit-breaker-agents`** — Meta-package that re-exports core + persistence for convenience.
 
 ## Consequences
 - **Easier testing**: Core can be tested without mocking Firestore/DynamoDB/Redis.

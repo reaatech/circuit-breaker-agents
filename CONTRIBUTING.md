@@ -58,8 +58,8 @@ pnpm test
 ```
 circuit-breaker-agents/
 ├── packages/
-│   ├── core/           # Core circuit breaker logic (circuit-breaker-core)
-│   ├── persistence/    # Persistence adapters (circuit-breaker-persistence)
+│   ├── core/           # Core circuit breaker logic (@reaatech/circuit-breaker-core)
+│   ├── persistence/    # Persistence adapters (@reaatech/circuit-breaker-persistence)
 │   └── examples/       # Example applications
 ├── docs/               # Documentation
 ├── skills/             # Agent skills documentation

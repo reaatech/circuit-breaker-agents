@@ -28,7 +28,7 @@ const result = await breaker.fire();
 ### After
 
 ```typescript
-import { CircuitBreaker } from 'circuit-breaker-agents';
+import { CircuitBreaker } from '@reaatech/circuit-breaker-agents';
 
 const breaker = new CircuitBreaker({
   name: 'my-agent',

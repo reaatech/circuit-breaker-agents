@@ -39,34 +39,34 @@ Extracted from battle-tested production implementations at [REA Technologies](ht
 
 ```bash
 # pnpm (recommended)
-pnpm add circuit-breaker-agents
+pnpm add @reaatech/circuit-breaker-agents
 
 # npm
-npm install circuit-breaker-agents
+npm install @reaatech/circuit-breaker-agents
 
 # yarn
-yarn add circuit-breaker-agents
+yarn add @reaatech/circuit-breaker-agents
 ```
 
-`circuit-breaker-agents` is a meta-package that re-exports everything from the core and persistence packages. For a zero-dependency footprint, install just the core:
+`@reaatech/circuit-breaker-agents` is a meta-package that re-exports everything from the core and persistence packages. For a zero-dependency footprint, install just the core:
 
 ```bash
-pnpm add circuit-breaker-core
+pnpm add @reaatech/circuit-breaker-core
 ```
 
 Persistence adapters require their peer dependencies installed alongside:
 
 ```bash
-pnpm add circuit-breaker-agents @google-cloud/firestore             # Firestore
-pnpm add circuit-breaker-agents @aws-sdk/client-dynamodb \
+pnpm add @reaatech/circuit-breaker-agents @google-cloud/firestore             # Firestore
+pnpm add @reaatech/circuit-breaker-agents @aws-sdk/client-dynamodb \
   @aws-sdk/util-dynamodb                                            # DynamoDB
-pnpm add circuit-breaker-agents ioredis                             # Redis
+pnpm add @reaatech/circuit-breaker-agents ioredis                             # Redis
 ```
 
 ## Quick Start
 
 ```typescript
-import { CircuitBreaker } from 'circuit-breaker-agents';
+import { CircuitBreaker } from '@reaatech/circuit-breaker-agents';
 
 const breaker = new CircuitBreaker({
   name: 'openai-gpt4',
@@ -118,9 +118,9 @@ const result = await breaker.execute(
 
 | Package | Description | Runtime Deps |
 |---------|-------------|--------------|
-| `circuit-breaker-agents` | Meta-package — re-exports all of core + persistence | core, persistence |
-| `circuit-breaker-core` | Core circuit breaker, state machine, strategies, metrics, types | zod |
-| `circuit-breaker-persistence` | Firestore, DynamoDB, Redis, and in-memory adapters | core, peer deps optional |
+| `@reaatech/circuit-breaker-agents` | Meta-package — re-exports all of core + persistence | core, persistence |
+| `@reaatech/circuit-breaker-core` | Core circuit breaker, state machine, strategies, metrics, types | zod |
+| `@reaatech/circuit-breaker-persistence` | Firestore, DynamoDB, Redis, and in-memory adapters | core, peer deps optional |
 
 All three packages ship ESM and CJS bundles with TypeScript declarations.
 
@@ -261,7 +261,7 @@ Persist circuit state across restarts with one of the built-in adapters.
 ### Firestore
 
 ```typescript
-import { CircuitBreaker, FirestoreAdapter } from 'circuit-breaker-agents';
+import { CircuitBreaker, FirestoreAdapter } from '@reaatech/circuit-breaker-agents';
 import { Firestore } from '@google-cloud/firestore';
 
 const breaker = new CircuitBreaker({
@@ -276,7 +276,7 @@ const breaker = new CircuitBreaker({
 ### DynamoDB
 
 ```typescript
-import { DynamoDBAdapter } from 'circuit-breaker-agents';
+import { DynamoDBAdapter } from '@reaatech/circuit-breaker-agents';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 
 const adapter = new DynamoDBAdapter(
@@ -289,7 +289,7 @@ await adapter.connect();
 ### Redis
 
 ```typescript
-import { RedisAdapter } from 'circuit-breaker-agents';
+import { RedisAdapter } from '@reaatech/circuit-breaker-agents';
 import Redis from 'ioredis';
 
 const adapter = new RedisAdapter(
@@ -351,7 +351,7 @@ breaker.on('persistenceError', (event) => {
 Pass a `MetricsCollector` implementation to integrate with your observability stack:
 
 ```typescript
-import { CircuitBreaker, DefaultMetricsCollector } from 'circuit-breaker-agents';
+import { CircuitBreaker, DefaultMetricsCollector } from '@reaatech/circuit-breaker-agents';
 
 const metrics = new DefaultMetricsCollector();
 

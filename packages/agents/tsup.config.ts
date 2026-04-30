@@ -7,5 +7,5 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   clean: true,
-  external: ['circuit-breaker-core', 'circuit-breaker-persistence'],
+  external: ['@reaatech/circuit-breaker-core', '@reaatech/circuit-breaker-persistence'],
 });

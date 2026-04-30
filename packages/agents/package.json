@@ -1,14 +1,15 @@
 {
-  "name": "circuit-breaker-agents",
+  "name": "@reaatech/circuit-breaker-agents",
   "version": "0.1.0",
   "description": "Circuit breaker library for agent-to-tool and agent-to-agent communication",
   "author": "Rick Somers <rick@reaatech.com> (https://reaatech.com)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/reaatech/circuit-breaker-agents.git"
+    "url": "https://github.com/reaatech/circuit-breaker-agents.git",
+    "directory": "packages/agents"
   },
-  "homepage": "https://github.com/reaatech/circuit-breaker-agents#readme",
+  "homepage": "https://github.com/reaatech/circuit-breaker-agents/tree/main/packages/agents#readme",
   "bugs": {
     "url": "https://github.com/reaatech/circuit-breaker-agents/issues"
   },
@@ -23,13 +24,14 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsup",
     "test": "vitest run",
-    "lint": "eslint src",
+    "lint": "biome check src",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
@@ -38,7 +40,7 @@
     "vitest": "^4.1.5"
   },
   "dependencies": {
-    "circuit-breaker-core": "workspace:*",
-    "circuit-breaker-persistence": "workspace:*"
+    "@reaatech/circuit-breaker-core": "workspace:*",
+    "@reaatech/circuit-breaker-persistence": "workspace:*"
   }
 }

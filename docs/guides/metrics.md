@@ -5,7 +5,7 @@
 The `CircuitBreaker` automatically records metrics when `metricsEnabled` is `true` (default). You can also provide a custom `MetricsCollector`.
 
 ```typescript
-import { CircuitBreaker } from 'circuit-breaker-agents';
+import { CircuitBreaker } from '@reaatech/circuit-breaker-agents';
 
 const breaker = new CircuitBreaker({
   name: 'my-circuit',
@@ -18,7 +18,7 @@ const breaker = new CircuitBreaker({
 The default collector keeps in-memory counters:
 
 ```typescript
-import { DefaultMetricsCollector } from 'circuit-breaker-agents';
+import { DefaultMetricsCollector } from '@reaatech/circuit-breaker-agents';
 
 const collector = new DefaultMetricsCollector();
 const breaker = new CircuitBreaker({
@@ -39,7 +39,7 @@ console.log(changes); // [{ circuitId, from, to, time }]
 Integrate with your observability stack:
 
 ```typescript
-import type { MetricsCollector } from 'circuit-breaker-agents';
+import type { MetricsCollector } from '@reaatech/circuit-breaker-agents';
 
 class PrometheusMetricsCollector implements MetricsCollector {
   recordRequest(circuitId: string, status: 'success' | 'failure' | 'open' | 'timeout') {

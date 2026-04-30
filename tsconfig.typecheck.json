@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@reaatech/circuit-breaker-core": ["./packages/core/src/index.ts"],
+      "@reaatech/circuit-breaker-persistence": ["./packages/persistence/src/index.ts"],
+      "@reaatech/circuit-breaker-agents": ["./packages/agents/src/index.ts"]
+    }
+  }
+}
