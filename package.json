@@ -24,6 +24,7 @@
     "format:check": "biome format .",
     "type-check": "tsc --noEmit -p tsconfig.typecheck.json",
     "check": "pnpm lint && pnpm type-check && pnpm test",
+    "clean": "turbo run clean && rm -rf node_modules",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "turbo run build && changeset publish"
