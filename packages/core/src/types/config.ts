@@ -1,4 +1,5 @@
 import type { MetricsCollector } from '../metrics/MetricsCollector.js';
+import type { TripStrategy } from '../strategies/TripStrategy.js';
 import type { CircuitBreakerState, ResultMetadata } from './circuit.js';
 
 /**
@@ -14,6 +15,7 @@ export interface CircuitBreakerOptions {
   name: string;
   failureThreshold?: number;
   failureWindowMs?: number;
+  failureStrategy?: TripStrategy;
   minConfidence?: number;
   confidenceWindowMs?: number;
   maxCostPerMinute?: number;
