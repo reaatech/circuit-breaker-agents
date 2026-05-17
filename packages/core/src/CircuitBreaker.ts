@@ -64,9 +64,13 @@ export class CircuitBreaker {
       (this.options.metricsEnabled ? new DefaultMetricsCollector() : new NoOpMetricsCollector());
 
     this.tripStrategies = [];
-    this.tripStrategies.push(
-      new ErrorThresholdStrategy(this.options.failureThreshold, this.options.failureWindowMs),
-    );
+    if (options.failureStrategy) {
+      this.tripStrategies.push(options.failureStrategy);
+    } else {
+      this.tripStrategies.push(
+        new ErrorThresholdStrategy(this.options.failureThreshold, this.options.failureWindowMs),
+      );
+    }
     if (options.minConfidence !== undefined) {
       this.tripStrategies.push(
         new ConfidenceThresholdStrategy(options.minConfidence, options.confidenceWindowMs),
