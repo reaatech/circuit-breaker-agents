@@ -36,7 +36,7 @@ function createMockRedis(): Redis {
       return 1;
     }),
     expire: vi.fn(async () => 1),
-    scan: vi.fn(async (cursor: string, ...args: string[]) => {
+    scan: vi.fn(async (_cursor: string, ...args: string[]) => {
       const matchIndex = args.indexOf('MATCH');
       const pattern = matchIndex >= 0 ? String(args[matchIndex + 1]) : '*';
       const regex = new RegExp(`^${pattern.replace(/\*/g, '.*').replace(/\?/g, '.')}$`);

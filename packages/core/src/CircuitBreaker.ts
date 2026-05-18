@@ -1,7 +1,7 @@
 import { CircuitOpenError, CircuitTimeoutError } from './CircuitBreakerError.js';
-import { StateMachine } from './StateMachine.js';
 import type { MetricsCollector } from './metrics/MetricsCollector.js';
 import { DefaultMetricsCollector, NoOpMetricsCollector } from './metrics/MetricsCollector.js';
+import { StateMachine } from './StateMachine.js';
 import { ConfidenceThresholdStrategy } from './strategies/ConfidenceThresholdStrategy.js';
 import { CostThresholdStrategy } from './strategies/CostThresholdStrategy.js';
 import { ErrorThresholdStrategy } from './strategies/ErrorThresholdStrategy.js';
@@ -9,16 +9,14 @@ import {
   GradualRecoveryStrategy,
   SingleRecoveryStrategy,
 } from './strategies/GradualRecoveryStrategy.js';
-import type { RecoveryStrategy } from './strategies/TripStrategy.js';
-import type { TripStrategy } from './strategies/TripStrategy.js';
+import type { RecoveryStrategy, TripStrategy } from './strategies/TripStrategy.js';
 import type { CircuitBreakerStats, CircuitState, ResultMetadata } from './types/circuit.js';
 import type {
   CircuitBreakerOptions,
   CorePersistenceAdapter,
   ExecutionContext,
 } from './types/config.js';
-import type { CircuitEvent, CircuitEventType } from './types/events.js';
-import type { EventHandler } from './types/events.js';
+import type { CircuitEvent, CircuitEventType, EventHandler } from './types/events.js';
 
 export class CircuitBreaker {
   private readonly name: string;
