@@ -1,4 +1,4 @@
-import { CircuitBreaker, CircuitOpenError } from '@reaatech/circuit-breaker-agents';
+import { CircuitBreaker } from '@reaatech/circuit-breaker-agents';
 
 /**
  * Basic usage example — no persistence, no external dependencies.
@@ -54,7 +54,7 @@ function extractMetadata(result: unknown) {
   };
 }
 
-function extractErrorMetadata(error: unknown) {
+function extractErrorMetadata(_error: unknown) {
   return { error: true };
 }
 

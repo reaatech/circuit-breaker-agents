@@ -40,8 +40,15 @@
   "packageManager": "pnpm@10.22.0",
   "pnpm": {
     "supportedArchitectures": {
-      "os": ["linux", "darwin", "win32"],
-      "cpu": ["x64", "arm64"]
+      "os": [
+        "linux",
+        "darwin",
+        "win32"
+      ],
+      "cpu": [
+        "x64",
+        "arm64"
+      ]
     }
   },
   "engines": {
