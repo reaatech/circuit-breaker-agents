@@ -81,7 +81,7 @@
     "ioredis": "^5.10.1",
     "tsup": "^8.0.1",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.5"
+    "vitest": "^4.1.7"
   },
   "dependencies": {
     "@reaatech/circuit-breaker-core": "workspace:*"
