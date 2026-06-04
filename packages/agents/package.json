@@ -1,6 +1,6 @@
 {
   "name": "@reaatech/circuit-breaker-agents",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Circuit breaker library for agent-to-tool and agent-to-agent communication",
   "author": "Rick Somers <rick@reaatech.com> (https://reaatech.com)",
   "license": "MIT",
