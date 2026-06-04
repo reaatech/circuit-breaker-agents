@@ -1,6 +1,6 @@
 {
   "name": "@reaatech/circuit-breaker-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Core circuit breaker logic for agent systems",
   "author": "Rick Somers <rick@reaatech.com> (https://reaatech.com)",
   "license": "MIT",
