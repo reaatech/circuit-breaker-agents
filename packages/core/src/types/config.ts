@@ -32,11 +32,11 @@ export interface CircuitBreakerOptions {
   metricsCollector?: MetricsCollector;
 }
 
-export interface ExecutionContext {
+export interface ExecutionContext<T = unknown> {
   circuitId?: string;
-  onSuccess?: (result: unknown) => ResultMetadata;
+  onSuccess?: (result: T) => ResultMetadata;
   onFailure?: (error: unknown) => ResultMetadata;
   timeoutMs?: number;
-  fallback?: () => Promise<unknown>;
+  fallback?: () => Promise<T>;
   forceRoute?: boolean;
 }
