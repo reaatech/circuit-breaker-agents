@@ -44,7 +44,7 @@ importers:
         version: 6.0.3
       vitest:
         specifier: ^4.1.9
-        version: 4.1.9(@opentelemetry/api@1.9.1)(@types/node@25.8.0)(@vitest/coverage-v8@4.1.9)(vite@8.0.13(@types/node@25.8.0)(esbuild@0.27.7)(tsx@4.22.4))
+        version: 4.1.9(@opentelemetry/api@1.9.1)(@types/node@25.8.0)(@vitest/coverage-v8@4.1.9)(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(tsx@4.22.4))
 
   packages/core:
     dependencies:
@@ -63,7 +63,7 @@ importers:
         version: 6.0.3
       vitest:
         specifier: ^4.1.9
-        version: 4.1.9(@opentelemetry/api@1.9.1)(@types/node@25.8.0)(@vitest/coverage-v8@4.1.9)(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(tsx@4.22.4))
+        version: 4.1.9(@opentelemetry/api@1.9.1)(@types/node@25.8.0)(@vitest/coverage-v8@4.1.9)(vite@8.0.13(@types/node@25.8.0)(esbuild@0.27.7)(tsx@4.22.4))
 
   packages/examples/basic-usage:
     dependencies:
@@ -145,8 +145,8 @@ importers:
         specifier: ^8.5.0
         version: 8.6.0
       '@vitest/coverage-v8':
-        specifier: ^4.1.8
-        version: 4.1.8(vitest@4.1.9)
+        specifier: ^4.1.9
+        version: 4.1.9(vitest@4.1.9)
       ioredis:
         specifier: ^5.10.1
         version: 5.10.1
@@ -158,7 +158,7 @@ importers:
         version: 6.0.3
       vitest:
         specifier: ^4.1.9
-        version: 4.1.9(@opentelemetry/api@1.9.1)(@types/node@25.8.0)(@vitest/coverage-v8@4.1.8)(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(tsx@4.22.4))
+        version: 4.1.9(@opentelemetry/api@1.9.1)(@types/node@25.8.0)(@vitest/coverage-v8@4.1.9)(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(tsx@4.22.4))
 
 packages:
 
@@ -1152,15 +1152,6 @@ packages:
   '@types/node@25.8.0':
     resolution: {integrity: sha512-TCFSk8IZh+iLX1xtksoBVtdmgL+1IX0fC9BeU4QqFSuNdN/K+HUlhqOzEmSYYpZUVsLYcPqc9KX+60iDuninSQ==}
 
-  '@vitest/coverage-v8@4.1.8':
-    resolution: {integrity: sha512-lt3kovsyHwYe00wq4D1ti0Z974fWj4NLp6siqiyEufUpyFwK9Yhi7rBhac9JL5aA0zoMrJqc4vYPZRUnI7l7nw==}
-    peerDependencies:
-      '@vitest/browser': 4.1.8
-      vitest: 4.1.8
-    peerDependenciesMeta:
-      '@vitest/browser':
-        optional: true
-
   '@vitest/coverage-v8@4.1.9':
     resolution: {integrity: sha512-G9/lgqibheLVBDRuya45EbsEXTYcWoSG+TLg7i2axuzx0Eq62eXn+aWXyaVdV5vKvFSWd6ywcX8hA7la9Pvu8g==}
     peerDependencies:
@@ -1184,9 +1175,6 @@ packages:
       vite:
         optional: true
 
-  '@vitest/pretty-format@4.1.8':
-    resolution: {integrity: sha512-9GasEBxpZ1VYIpqHf/0+YGg121uSNwCKOJqIrTwWP/TB7DmFCiaBpNl3aPZzoLWfWkuqhbH8vJIVobZkvdo2cA==}
-
   '@vitest/pretty-format@4.1.9':
     resolution: {integrity: sha512-s0iufns3iIFitdgm+YR7g1whCAaGtXz459VS9/PqyKDEEFgYIhsHOQmXgIgDuYCt7DeQmiZT0Qe2OA2p4ZPu5A==}
 
@@ -1198,9 +1186,6 @@ packages:
 
   '@vitest/spy@4.1.9':
     resolution: {integrity: sha512-fHpsS6mIi+PiEW+vcRVOMkX1oSaPKne3VOclSFICPcGOmfKgXPU5iAah+wcNcj2xPrCCmfq99IDGf+EojhhvhA==}
-
-  '@vitest/utils@4.1.8':
-    resolution: {integrity: sha512-uOJamYALNhfJ6iolExyQM40yIQwDqYnkKtQ5VCiSe17E33H0aQ/u+1GlRuz4LZBk6Mm3sg90G9hEbmEt37C1Zg==}
 
   '@vitest/utils@4.1.9':
     resolution: {integrity: sha512-A51o8ymO5PpqlWNnBP9ZHPXDIpuMtTLlGSjN7la4US+LJzoUMyhwjA5QXlm39JexgwHKW4Xjs8Z2d3dLCXOeuA==}
@@ -3267,20 +3252,6 @@ snapshots:
     dependencies:
       undici-types: 7.24.6
 
-  '@vitest/coverage-v8@4.1.8(vitest@4.1.9)':
-    dependencies:
-      '@bcoe/v8-coverage': 1.0.2
-      '@vitest/utils': 4.1.8
-      ast-v8-to-istanbul: 1.0.0
-      istanbul-lib-coverage: 3.2.2
-      istanbul-lib-report: 3.0.1
-      istanbul-reports: 3.2.0
-      magicast: 0.5.3
-      obug: 2.1.1
-      std-env: 4.1.0
-      tinyrainbow: 3.1.0
-      vitest: 4.1.9(@opentelemetry/api@1.9.1)(@types/node@25.8.0)(@vitest/coverage-v8@4.1.8)(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(tsx@4.22.4))
-
   '@vitest/coverage-v8@4.1.9(vitest@4.1.9)':
     dependencies:
       '@bcoe/v8-coverage': 1.0.2
@@ -3320,10 +3291,6 @@ snapshots:
     optionalDependencies:
       vite: 8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(tsx@4.22.4)
 
-  '@vitest/pretty-format@4.1.8':
-    dependencies:
-      tinyrainbow: 3.1.0
-
   '@vitest/pretty-format@4.1.9':
     dependencies:
       tinyrainbow: 3.1.0
@@ -3341,12 +3308,6 @@ snapshots:
       pathe: 2.0.3
 
   '@vitest/spy@4.1.9': {}
-
-  '@vitest/utils@4.1.8':
-    dependencies:
-      '@vitest/pretty-format': 4.1.8
-      convert-source-map: 2.0.0
-      tinyrainbow: 3.1.0
 
   '@vitest/utils@4.1.9':
     dependencies:
@@ -4377,35 +4338,6 @@ snapshots:
       esbuild: 0.28.0
       fsevents: 2.3.3
       tsx: 4.22.4
-
-  vitest@4.1.9(@opentelemetry/api@1.9.1)(@types/node@25.8.0)(@vitest/coverage-v8@4.1.8)(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(tsx@4.22.4)):
-    dependencies:
-      '@vitest/expect': 4.1.9
-      '@vitest/mocker': 4.1.9(vite@8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(tsx@4.22.4))
-      '@vitest/pretty-format': 4.1.9
-      '@vitest/runner': 4.1.9
-      '@vitest/snapshot': 4.1.9
-      '@vitest/spy': 4.1.9
-      '@vitest/utils': 4.1.9
-      es-module-lexer: 2.1.0
-      expect-type: 1.3.0
-      magic-string: 0.30.21
-      obug: 2.1.1
-      pathe: 2.0.3
-      picomatch: 4.0.4
-      std-env: 4.1.0
-      tinybench: 2.9.0
-      tinyexec: 1.1.2
-      tinyglobby: 0.2.17
-      tinyrainbow: 3.1.0
-      vite: 8.0.13(@types/node@25.8.0)(esbuild@0.28.0)(tsx@4.22.4)
-      why-is-node-running: 2.3.0
-    optionalDependencies:
-      '@opentelemetry/api': 1.9.1
-      '@types/node': 25.8.0
-      '@vitest/coverage-v8': 4.1.8(vitest@4.1.9)
-    transitivePeerDependencies:
-      - msw
 
   vitest@4.1.9(@opentelemetry/api@1.9.1)(@types/node@25.8.0)(@vitest/coverage-v8@4.1.9)(vite@8.0.13(@types/node@25.8.0)(esbuild@0.27.7)(tsx@4.22.4)):
     dependencies:
