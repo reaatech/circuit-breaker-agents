@@ -139,8 +139,8 @@ importers:
         specifier: ^3.1035.0
         version: 3.1048.0
       '@aws-sdk/util-dynamodb':
-        specifier: ^3.996.4
-        version: 3.996.4(@aws-sdk/client-dynamodb@3.1048.0)
+        specifier: ^3.996.5
+        version: 3.996.5(@aws-sdk/client-dynamodb@3.1048.0)
       '@google-cloud/firestore':
         specifier: ^8.5.0
         version: 8.6.0
@@ -254,11 +254,11 @@ packages:
     peerDependencies:
       '@aws-sdk/client-dynamodb': ^3.1003.0
 
-  '@aws-sdk/util-dynamodb@3.996.4':
-    resolution: {integrity: sha512-Gel6Qiof4NWdtGT548FxoAkmmKmvsEVQYzbtC4RJnwgh9z33gmiYSJOGnKZHvZJWC2SgjS6AKe6DfuGCqU4vdg==}
+  '@aws-sdk/util-dynamodb@3.996.5':
+    resolution: {integrity: sha512-m9bdmYq3WtbMHAKGALw9XWiMBfKu5T8ukgdJT7Mc/d2oOwDGNFmhsnnkQ18xomoXo/ZHxAuIDi3Y6slsblW1Mg==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
-      '@aws-sdk/client-dynamodb': ^3.1064.0
+      '@aws-sdk/client-dynamodb': ^3.1069.0
 
   '@aws-sdk/util-locate-window@3.965.5':
     resolution: {integrity: sha512-WhlJNNINQB+9qtLtZJcpQdgZw3SCDCpXdUJP7cToGwHbCWCnRckGlc6Bx/OhWwIYFNAn+FIydY8SZ0QmVu3xTQ==}
@@ -2598,7 +2598,7 @@ snapshots:
       '@aws-sdk/client-dynamodb': 3.1048.0
       tslib: 2.8.1
 
-  '@aws-sdk/util-dynamodb@3.996.4(@aws-sdk/client-dynamodb@3.1048.0)':
+  '@aws-sdk/util-dynamodb@3.996.5(@aws-sdk/client-dynamodb@3.1048.0)':
     dependencies:
       '@aws-sdk/client-dynamodb': 3.1048.0
       tslib: 2.8.1
