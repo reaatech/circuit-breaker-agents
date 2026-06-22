@@ -90,7 +90,7 @@ export class CircuitBreaker {
         : new GradualRecoveryStrategy(options.recoveryMaxCalls ?? 16);
   }
 
-  async execute<T>(operation: () => Promise<T>, context?: ExecutionContext): Promise<T> {
+  async execute<T>(operation: () => Promise<T>, context?: ExecutionContext<T>): Promise<T> {
     const circuitId = context?.circuitId ?? this.name;
 
     await this.ensureStateLoaded(circuitId);
@@ -105,7 +105,7 @@ export class CircuitBreaker {
     if (state === 'OPEN') {
       if (context?.fallback) {
         this.metricsCollector.recordRequest(circuitId, 'open');
-        return context.fallback() as Promise<T>;
+        return context.fallback();
       }
 
       const stats = this.stateMachine.getStats(circuitId);
