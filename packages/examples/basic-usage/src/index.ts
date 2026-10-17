@@ -45,12 +45,11 @@ async function simulateOperation(
   return { text: 'Hello from LLM', ...metadata };
 }
 
-function extractMetadata(result: unknown) {
-  const opResult = result as OperationResult;
+function extractMetadata(result: OperationResult) {
   return {
-    confidence: opResult.confidence,
-    costUsd: opResult.costUsd,
-    tokens: opResult.tokens,
+    confidence: result.confidence,
+    costUsd: result.costUsd,
+    tokens: result.tokens,
   };
 }
 
